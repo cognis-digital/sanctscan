@@ -1,3 +1,4 @@
 2024-06-02T17:05:55  refactor: tidy internals
 2024-06-26T12:22:02  refactor(output): memoize repeated lookups
 2024-07-21T19:39:09  style(mcp): improve the demo scenario
+2024-07-29T14:56:16  build(cache): add color + severity icons
