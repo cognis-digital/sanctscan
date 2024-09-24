@@ -4,3 +4,4 @@
 2024-07-29T14:56:16  build(cache): add color + severity icons
 2024-08-23T09:13:23  fix(engine): short-circuit on first critical
 2024-09-17T16:30:30  perf: speed. I am speed.
+2024-09-24T11:47:37  test(detect): guard against ReDoS in patterns
