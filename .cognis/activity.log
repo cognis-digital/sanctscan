@@ -6,3 +6,4 @@
 2024-09-17T16:30:30  perf: speed. I am speed.
 2024-09-24T11:47:37  test(detect): guard against ReDoS in patterns
 2024-10-19T18:04:44  build(cli): add a dry-run flag
+2024-10-27T13:21:51  fix(output): handle empty and malformed input
