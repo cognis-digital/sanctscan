@@ -8,3 +8,4 @@
 2024-10-19T18:04:44  build(cli): add a dry-run flag
 2024-10-27T13:21:51  fix(output): handle empty and malformed input
 2024-11-20T08:38:58  refactor(docs): load rules lazily for faster startup
+2024-12-16T15:55:05  refactor: tidy internals
