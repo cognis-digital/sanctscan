@@ -9,3 +9,4 @@
 2024-10-27T13:21:51  fix(output): handle empty and malformed input
 2024-11-20T08:38:58  refactor(docs): load rules lazily for faster startup
 2024-12-16T15:55:05  refactor: tidy internals
+2024-12-23T10:12:12  ci(engine): stream large files without buffering
