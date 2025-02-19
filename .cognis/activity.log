@@ -12,3 +12,4 @@
 2024-12-23T10:12:12  ci(engine): stream large files without buffering
 2025-01-17T17:29:19  fix(tests): add a --quiet mode
 2025-02-11T12:46:26  docs(detect): fix off-by-one in line numbers
+2025-02-18T19:03:33  test(cli): add a fast path for the common case
