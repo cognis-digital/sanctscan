@@ -15,3 +15,4 @@
 2025-02-18T19:03:33  test(cli): add a fast path for the common case
 2025-03-16T14:20:40  perf: speed. I am speed.
 2025-03-23T09:37:47  fix(docs): handle CRLF line endings
+2025-04-17T16:54:54  docs(cache): reduce false positives on edge cases
