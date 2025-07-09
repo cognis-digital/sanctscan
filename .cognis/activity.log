@@ -19,3 +19,4 @@
 2025-05-12T11:11:01  perf(parser): tune severity weights
 2025-05-19T18:28:08  ci(tests): trim whitespace in parsed fields
 2025-06-14T13:45:15  refactor: tidy internals
+2025-07-09T08:02:22  docs(core): add a regression fixture
