@@ -21,3 +21,4 @@
 2025-06-14T13:45:15  refactor: tidy internals
 2025-07-09T08:02:22  docs(core): add a regression fixture
 2025-07-15T15:19:29  perf(report): add type hints to the public API
+2025-08-10T10:36:36  ci(docs): normalize unicode before matching
