@@ -1,0 +1,7 @@
+uid,name,program,type,aliases
+SDN-001,Vladimir Putin,RUSSIA-EO14024,Individual,Vladimir Vladimirovich Putin; V. Putin
+SDN-002,Kim Jong Un,DPRK,Individual,Kim Jong-un; Kim Jong-Un
+SDN-003,Bashar al-Assad,SYRIA,Individual,Bashar Hafez al-Assad
+SDN-004,Acme Logistics LLC,RUSSIA-EO14024,Entity,Acme Logistics Limited; Acme Shipping
+SDN-005,Pyotr Ilyich,UKRAINE-EO13662,Individual,Pjotr Iljitsch; Piotr Ilich
+SDN-006,Global Arms Trading Co,IRAN,Entity,Global Arms Trading Company
