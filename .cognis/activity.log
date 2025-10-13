@@ -25,3 +25,4 @@
 2025-08-17T17:53:43  feat(scoring): cover the multiline case
 2025-09-12T12:10:50  perf: speed. I am speed.
 2025-10-06T19:27:57  perf(tests): improve error messages with context
+2025-10-13T14:44:04  style(scan): assert exit codes in tests
