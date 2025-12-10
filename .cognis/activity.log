@@ -28,3 +28,4 @@
 2025-10-13T14:44:04  style(scan): assert exit codes in tests
 2025-11-08T09:01:11  feat(core): extract the scorer
 2025-12-03T16:18:18  chore(report): support stdin as a source
+2025-12-10T11:35:25  refactor: tidy internals
