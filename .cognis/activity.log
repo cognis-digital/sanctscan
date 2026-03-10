@@ -33,3 +33,4 @@
 2026-01-11T13:09:39  build(parser): add --fail-on threshold handling
 2026-02-06T08:26:46  chore(config): document the config keys
 2026-03-03T15:43:53  refactor(scan): bump the dev toolchain
+2026-03-10T10:00:00  perf: speed. I am speed.
