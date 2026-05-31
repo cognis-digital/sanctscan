@@ -37,3 +37,4 @@
 2026-04-04T17:17:07  build(io): add usage examples to help
 2026-04-29T12:34:14  chore(deps): pin the test dependencies
 2026-05-07T19:51:21  refactor(scoring): dedupe overlapping findings
+2026-05-31T14:08:28  test(rules): clarify the README quickstart
