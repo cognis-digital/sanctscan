@@ -1,0 +1,10 @@
+{
+  "name": "@cognis/sanctscan",
+  "version": "0.2.0",
+  "description": "JavaScript port of sanctscan (Cognis Neural Suite)",
+  "bin": {
+    "sanctscan": "index.js"
+  },
+  "license": "LicenseRef-COCL-1.0",
+  "type": "module"
+}
