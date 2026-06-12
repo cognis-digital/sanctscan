@@ -9,7 +9,6 @@ import os
 import subprocess
 import sys
 
-import pytest
 
 from sanctscan import (
     TOOL_NAME,

@@ -16,7 +16,7 @@
 </div>
 
 ```bash
-pip install cognis-sanctscan
+pip install "git+https://github.com/cognis-digital/sanctscan.git"
 sanctscan scan .            # → prioritized findings in seconds
 ```
 
@@ -51,7 +51,7 @@ AML name-screening is dominated by $$ vendors; a CLI that pulls live OFAC SDN da
 ## Quick start
 
 ```bash
-pip install cognis-sanctscan
+pip install "git+https://github.com/cognis-digital/sanctscan.git"
 sanctscan --version
 sanctscan scan .                       # scan current project
 sanctscan scan . --format json         # machine-readable
