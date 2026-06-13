@@ -20,6 +20,12 @@ pip install "git+https://github.com/cognis-digital/sanctscan.git"
 sanctscan scan .            # → prioritized findings in seconds
 ```
 
+<!-- cognis:layman:start -->
+## What is this?
+
+Sanctscan checks names of people or companies against official sanctions lists — such as those maintained by the US (OFAC), EU, and UN — to see if they are prohibited from doing business. You give it a name or a list of names, and it tells you whether any match a known sanctioned entity, even if the spelling is slightly different (due to typos or transliteration from other scripts). It explains exactly why it flagged a name so a compliance officer or auditor can verify the result. It is built for banks, fintech companies, payment processors, and any business that needs to screen counterparties before a transaction.
+<!-- cognis:layman:end -->
+
 ## Contents
 
 - [Why sanctscan?](#why) · [Features](#features) · [Quick start](#quick-start) · [Example](#example) · [Architecture](#architecture) · [AI stack](#ai-stack) · [How it compares](#how-it-compares) · [Integrations](#integrations) · [Install anywhere](#install-anywhere) · [Related](#related) · [Contributing](#contributing)
@@ -48,6 +54,42 @@ AML name-screening is dominated by $$ vendors; a CLI that pulls live OFAC SDN da
 <div align="right"><a href="#top">↑ back to top</a></div>
 
 <a name="quick-start"></a>
+<!-- cognis:install:start -->
+## Install
+
+`sanctscan` is source-available (not published to PyPI) — every method below installs
+straight from GitHub. Pick whichever you prefer; the one-line scripts auto-detect
+the best tool available on your machine.
+
+**One-liner (Linux / macOS):**
+```sh
+curl -fsSL https://raw.githubusercontent.com/cognis-digital/sanctscan/HEAD/install.sh | sh
+```
+
+**One-liner (Windows PowerShell):**
+```powershell
+irm https://raw.githubusercontent.com/cognis-digital/sanctscan/HEAD/install.ps1 | iex
+```
+
+**Or install manually — any one of:**
+```sh
+pipx install "git+https://github.com/cognis-digital/sanctscan.git"     # isolated (recommended)
+uv tool install "git+https://github.com/cognis-digital/sanctscan.git"  # uv
+pip install "git+https://github.com/cognis-digital/sanctscan.git"      # pip
+```
+
+**From source:**
+```sh
+git clone https://github.com/cognis-digital/sanctscan.git
+cd sanctscan && pip install .
+```
+
+Then run:
+```sh
+sanctscan --help
+```
+<!-- cognis:install:end -->
+
 ## Quick start
 
 ```bash
