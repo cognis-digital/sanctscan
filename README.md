@@ -1,80 +1,188 @@
 <a name="top"></a>
+
 <div align="center">
+
+
 
 <img src="https://capsule-render.vercel.app/api?type=rect&color=0:6b46c1,100:2b6cb0&height=120&section=header&text=SANCTSCAN&fontSize=48&fontColor=ffffff&fontAlignY=58" width="100%" alt="SANCTSCAN"/>
 
+
+
 # SANCTSCAN
+
+
 
 ### Screens counterparties and transactions against OFAC/EU/UN sanctions lists with fuzzy name matching and explainable hit scoring.
 
+
+
 <img src="https://readme-typing-svg.demolab.com?font=Fira+Code&size=18&duration=3500&pause=1000&color=6B46C1&center=true&vCenter=true&width=720&lines=Screens+counterparties+and+transactions+against+OFACEUUN+san;Self-hostable+%C2%B7+MCP-native+%C2%B7+CI-ready+%C2%B7+polyglot" width="720"/>
+
+
 
 [![PyPI](https://img.shields.io/pypi/v/cognis-sanctscan.svg?color=6b46c1)](https://pypi.org/project/cognis-sanctscan/) [![CI](https://github.com/cognis-digital/sanctscan/actions/workflows/ci.yml/badge.svg)](https://github.com/cognis-digital/sanctscan/actions) [![License: COCL 1.0](https://img.shields.io/badge/License-COCL%201.0-2b6cb0.svg)](LICENSE) [![Suite](https://img.shields.io/badge/Cognis-Neural%20Suite-6b46c1.svg)](https://github.com/cognis-digital)
 
+
+
 *Fintech & Payments Security — PCI, fraud, AML, and payment rails.*
+
+
 
 </div>
 
+
+
 ```bash
+
 pip install cognis-sanctscan
+
 sanctscan scan .            # → prioritized findings in seconds
+
 ```
+
+
 
 ## Contents
 
+
+
 - [Why sanctscan?](#why) · [Features](#features) · [Quick start](#quick-start) · [Example](#example) · [Architecture](#architecture) · [AI stack](#ai-stack) · [How it compares](#how-it-compares) · [Integrations](#integrations) · [Install anywhere](#install-anywhere) · [Related](#related) · [Contributing](#contributing)
 
+
+
+## Usage — step by step
+
+`sanctscan` screens names against an OFAC/EU/UN-style watchlist (CSV or JSON) with explainable fuzzy matching. Exit is non-zero when any name is flagged at/above the threshold — so it can gate a pipeline.
+
+1. **Install**
+   ```bash
+   pip install sanctscan
+   ```
+
+2. **Screen a single name** against a watchlist:
+   ```bash
+   sanctscan screen --watchlist watchlist.csv --name "Vladmir Putin"
+   ```
+
+3. **Screen a column of names** from a CSV (auto-detects the name column, or set `--column`):
+   ```bash
+   sanctscan screen -w watchlist.csv --input customers.csv --column full_name
+   ```
+
+4. **Read JSON output** and tune the match `--threshold` (0–1, default 0.80):
+   ```bash
+   sanctscan screen -w watchlist.csv -i customers.csv --format json --threshold 0.85 \
+     | jq '.flagged'
+   ```
+
+5. **Use in CI / batch** — the flagged exit code gates the run:
+   ```bash
+   sanctscan screen -w wl.csv -n "Some Name" || echo "FLAGGED"
+   ```
+
 <a name="why"></a>
+
 ## Why sanctscan?
+
+
 
 AML name-screening is dominated by $$ vendors; a CLI that pulls live OFAC SDN data and gives a deterministic, auditable match score with transliteration handling is highly forkable.
 
+
+
 `sanctscan` is single-purpose, scriptable, and self-hostable: point it at a target, get prioritized results in the format your workflow already speaks (table · JSON · SARIF), gate CI on it, and let agents drive it over MCP.
 
+
+
 <div align="right"><a href="#top">↑ back to top</a></div>
+
+
 
 <a name="features"></a>
+
 ## Features
 
+
+
 - ✅ Normalize Name
+
 - ✅ Tokenize
+
 - ✅ Name Similarity
+
 - ✅ Load Watchlist
+
 - ✅ Screen Name
+
 - ✅ Screen Records
+
 - ✅ Runs on Linux/macOS/Windows · Docker · devcontainer
+
 - ✅ Ports in Python, JavaScript, Go, and Rust (`ports/`)
 
+
+
 <div align="right"><a href="#top">↑ back to top</a></div>
+
+
 
 <a name="quick-start"></a>
+
 ## Quick start
 
+
+
 ```bash
+
 pip install cognis-sanctscan
+
 sanctscan --version
+
 sanctscan scan .                       # scan current project
+
 sanctscan scan . --format json         # machine-readable
+
 sanctscan scan . --fail-on high        # CI gate (non-zero exit)
+
 ```
 
+
+
 <div align="right"><a href="#top">↑ back to top</a></div>
+
+
 
 <a name="example"></a>
+
 ## Example
 
+
+
 ```text
+
 $ sanctscan scan .
+
   [HIGH    ] SAN-001  example finding             (./src/app.py)
+
   [MEDIUM  ] SAN-002  another signal              (./config.yaml)
 
+
+
   2 findings · risk score 5 · 38ms
+
 ```
+
+
 
 <div align="right"><a href="#top">↑ back to top</a></div>
 
+
+
 <a name="architecture"></a>
+
 ## Architecture
+
+
 
 ```mermaid
 flowchart LR
@@ -82,87 +190,173 @@ flowchart LR
   P --> OUT[findings (JSON / SARIF)]
 ```
 
+
+
 <div align="right"><a href="#top">↑ back to top</a></div>
 
+
+
 <a name="ai-stack"></a>
+
 ## Use it from any AI stack
+
+
 
 `sanctscan` is interoperable with every popular way of using AI:
 
+
+
 - **MCP server** — `sanctscan mcp` (Claude Desktop, Cursor, Cognis.Studio, [uncensored-fleet](https://github.com/cognis-digital/uncensored-fleet))
+
 - **OpenAI-compatible / JSON** — pipe `sanctscan scan . --format json` into any agent or LLM
+
 - **LangChain · CrewAI · AutoGen · LlamaIndex** — wrap the CLI/JSON as a tool in one line
+
 - **CI / scripts** — exit codes + SARIF for non-AI pipelines
+
+
 
 <div align="right"><a href="#top">↑ back to top</a></div>
 
+
+
 <a name="how-it-compares"></a>
+
 ## How it compares
 
+
+
 | | **Cognis sanctscan** | OpenSanctions |
+
 |---|:---:|:---:|
+
 | Self-hostable, no account | ✅ | varies |
+
 | Single command, zero config | ✅ | ⚠️ |
+
 | JSON + SARIF for CI | ✅ | varies |
+
 | MCP-native (AI agents) | ✅ | ❌ |
+
 | Polyglot ports (JS/Go/Rust) | ✅ | ❌ |
+
 | Open license | ✅ COCL | varies |
+
+
 
 *Built in the spirit of **OpenSanctions / yenta**, re-framed the Cognis way. Missing a credit? Open a PR.*
 
+
+
 <div align="right"><a href="#top">↑ back to top</a></div>
 
+
+
 <a name="integrations"></a>
+
 ## Integrations
+
+
 
 Pipes into your stack: **SARIF** for code-scanning, **JSON** for anything, an **MCP server** (`sanctscan mcp`) for AI agents, and a webhook forwarder for SIEM/Slack/Jira. See [`docs/INTEGRATIONS.md`](docs/INTEGRATIONS.md).
 
+
+
 <div align="right"><a href="#top">↑ back to top</a></div>
+
+
 
 <a name="install-anywhere"></a>
+
 ## Install — every way, every platform
 
+
+
 ```bash
+
 pip install "git+https://github.com/cognis-digital/sanctscan.git"    # pip (works today)
+
 pipx install "git+https://github.com/cognis-digital/sanctscan.git"   # isolated CLI
+
 uv tool install "git+https://github.com/cognis-digital/sanctscan.git" # uv
+
 pip install cognis-sanctscan                                          # PyPI (when published)
+
 docker run --rm ghcr.io/cognis-digital/sanctscan:latest --help        # Docker
+
 brew install cognis-digital/tap/sanctscan                             # Homebrew tap
+
 curl -fsSL https://raw.githubusercontent.com/cognis-digital/sanctscan/main/install.sh | sh
+
 ```
 
+
+
 | Linux | macOS | Windows | Docker | Cloud |
+
 |---|---|---|---|---|
+
 | `scripts/setup-linux.sh` | `scripts/setup-macos.sh` | `scripts/setup-windows.ps1` | `docker run ghcr.io/cognis-digital/sanctscan` | [DEPLOY.md](docs/DEPLOY.md) (AWS/Azure/GCP/k8s) |
+
+
 
 <div align="right"><a href="#top">↑ back to top</a></div>
 
+
+
 <a name="related"></a>
+
 ## Related Cognis tools
 
+
+
 - [`panhound`](https://github.com/cognis-digital/panhound) — Scans code, logs, fixtures, and S3 buckets for leaked PANs (Luhn-validated card numbers) and CVVs before they hit prod.
+
 - [`fraudlens`](https://github.com/cognis-digital/fraudlens) — Replays a stream of transactions against pluggable fraud rules and ML scorers, emitting precision/recall and alert volume from the terminal.
+
 - [`obscan`](https://github.com/cognis-digital/obscan) — Conformance and security linter for Open Banking / FAPI APIs: validates OAuth flows, consent scopes, and PSD2 endpoints against the spec.
+
 - [`ledgerproof`](https://github.com/cognis-digital/ledgerproof) — Verifies double-entry ledger integrity and tamper-evidence by checking balance invariants and hash-chained journal entries.
+
 - [`iso20022`](https://github.com/cognis-digital/iso20022) — Validates, lints, and diffs ISO 20022 / pacs / camt payment messages and translates legacy MT into MX with schema-aware errors.
+
 - [`tokenvault`](https://github.com/cognis-digital/tokenvault) — Self-hostable PCI tokenization microservice and CLI that swaps PANs for format-preserving tokens and proves no raw card data persists.
+
+
 
 **Explore the suite →** [🗂️ all 170+ tools](https://github.com/cognis-digital/cognis-neural-suite) · [⭐ awesome-cognis](https://github.com/cognis-digital/awesome-cognis) · [🔗 cognis-sources](https://github.com/cognis-digital/cognis-sources) · [🤖 uncensored-fleet](https://github.com/cognis-digital/uncensored-fleet) · [🧠 engram](https://github.com/cognis-digital/engram)
 
+
+
 <div align="right"><a href="#top">↑ back to top</a></div>
 
+
+
 <a name="contributing"></a>
+
 ## Contributing
+
+
 
 PRs, new rules, and demo scenarios are welcome under the collaboration-pull model — see [CONTRIBUTING.md](CONTRIBUTING.md) and [SECURITY.md](SECURITY.md).
 
+
+
 > ### ⭐ If `sanctscan` saved you time, **star it** — it genuinely helps others find it.
+
+
 
 ## License
 
+
+
 Source-available under the **Cognis Open Collaboration License (COCL) v1.0** — free for personal, internal-evaluation, research, and educational use; **commercial / production use requires a license** (licensing@cognis.digital). See [LICENSE](LICENSE).
+
+
 
 ---
 
+
+
 <div align="center"><sub><b><a href="https://cognis.digital">Cognis Digital</a></b> · one of 170+ tools in the <a href="https://github.com/cognis-digital/cognis-neural-suite">Cognis Neural Suite</a> · <i>Making Tomorrow Better Today</i></sub></div>
+
