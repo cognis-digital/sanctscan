@@ -34,3 +34,6 @@ sanctscan = "sanctscan.cli:main"
 
 [tool.hatch.build.targets.wheel]
 packages = ["sanctscan"]
+
+[tool.hatch.metadata]
+allow-direct-references = true
