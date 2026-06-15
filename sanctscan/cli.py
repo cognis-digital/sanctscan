@@ -181,9 +181,13 @@ def main(argv: Optional[List[str]] = None) -> int:
         print("error: --threshold must be between 0 and 1", file=sys.stderr)
         return 2
 
+    if args.max_hits is not None and args.max_hits < 0:
+        print("error: --max-hits must be >= 0", file=sys.stderr)
+        return 2
+
     try:
         watchlist: List[WatchlistEntry] = load_watchlist(args.watchlist)
-    except (OSError, ValueError, json.JSONDecodeError) as exc:
+    except (OSError, ValueError, json.JSONDecodeError, csv.Error) as exc:
         print("error: could not load watchlist: %s" % exc, file=sys.stderr)
         return 2
 
@@ -196,7 +200,7 @@ def main(argv: Optional[List[str]] = None) -> int:
     else:
         try:
             names = _read_names_from_file(args.input, args.column)
-        except OSError as exc:
+        except (OSError, csv.Error) as exc:
             print("error: could not read input: %s" % exc, file=sys.stderr)
             return 2
 

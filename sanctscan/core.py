@@ -177,11 +177,21 @@ def load_watchlist(path: str) -> List[WatchlistEntry]:
     CSV columns recognized (case-insensitive, extras ignored):
         uid, name, program, type/entity_type, aliases ("; "-separated)
     JSON: a list of objects with the same keys, or {"entries": [...]}.
+
+    Raises ValueError for unsupported file extensions.
     """
+    if not path or not path.strip():
+        raise ValueError("watchlist path must not be empty")
+    import os as _os
     lower = path.lower()
+    ext = _os.path.splitext(lower)[1]
     if lower.endswith(".json"):
         return _load_watchlist_json(path)
-    return _load_watchlist_csv(path)
+    if ext in ("", ".csv", ".tsv", ".txt"):
+        return _load_watchlist_csv(path)
+    raise ValueError(
+        "unsupported watchlist format %r -- use .csv, .tsv, .txt, or .json" % ext
+    )
 
 
 def _split_aliases(raw: str) -> List[str]:
@@ -229,8 +239,16 @@ def _load_watchlist_json(path: str) -> List[WatchlistEntry]:
         data = json.load(fh)
     if isinstance(data, dict):
         data = data.get("entries", [])
+    if not isinstance(data, list):
+        raise ValueError(
+            "JSON watchlist must be a list of objects or "
+            '{"entries": [...]} -- got %s' % type(data).__name__
+        )
     entries: List[WatchlistEntry] = []
     for i, obj in enumerate(data):
+        if not isinstance(obj, dict):
+            # Skip non-dict items (strings, numbers, null) with no crash.
+            continue
         name = (obj.get("name") or "").strip()
         if not name:
             continue
@@ -261,6 +279,12 @@ def screen_name(
     uid (deterministic tie-break). For each entry, the best-scoring of its
     primary name and aliases is reported.
     """
+    if not 0.0 <= threshold <= 1.0:
+        raise ValueError(
+            "threshold must be in [0, 1], got %r" % threshold
+        )
+    if max_hits is not None and max_hits < 0:
+        raise ValueError("max_hits must be >= 0, got %r" % max_hits)
     hits: List[Hit] = []
     for entry in watchlist:
         best_score = -1.0
