@@ -42,6 +42,76 @@ sanctscan scan .            # → prioritized findings in seconds
 
 
 
+
+<!-- cognis:example:start -->
+## 🔎 Example output
+
+Real, reproducible output from the tool — runs offline:
+
+```console
+$ sanctscan-emit --version
+sanctscan 0.1.0
+```
+
+```console
+$ sanctscan-emit --help
+usage: sanctscan [-h] [--version] {screen} ...
+
+SANCTSCAN -- deterministic, auditable sanctions name-screening with explainable fuzzy matching.
+
+positional arguments:
+  {screen}
+    screen    Screen one or more names against a sanctions watchlist.
+
+options:
+  -h, --help  show this help message and exit
+  --version   show program's version number and exit
+
+Command-line interface for SANCTSCAN.
+
+Examples:
+
+  # Screen a single name against an OFAC-style CSV watchlist
+  python -m sanctscan screen --watchlist demos/01-basic/watchlist.csv \
+      --name "Vladmir Putin"
+
+  # Screen a column of names from a CSV, emit JSON for CI / piping
+  python -m sanctscan screen -w watchlist.csv --input customers.csv \
+      --column full_name --format json --threshold 0.85
+
+  # Exit code is non-zero when any hit at/above the threshold is found,
+  # so it can gate a pipeline:
+  python -m sanctscan screen -w wl.csv -n "Some Name" || echo "FLAGGED"
+```
+
+> Blocks above are real `sanctscan` output — reproduce them from a clone.
+
+**Sample result format** _(illustrative values — run on your own data for real findings):_
+
+```
+{
+    "timestamp": "2023-02-15T14:30:00Z",
+    "findings": [
+        {
+            "id": "1234567890abcdef",
+            "title": "Suspicious Network Traffic",
+            "description": "Potential malicious activity detected on port 443.",
+            "mitre_attack_id": ["T1204"],
+            "severity": "medium"
+        },
+        {
+            "id": "2345678901ghijkl",
+            "title": "Unusual File Access",
+            "description": "An unknown process accessed a sensitive file.",
+            "mitre_attack_id": ["T1003"],
+            "severity": "high"
+        }
+    ]
+}
+```
+
+<!-- cognis:example:end -->
+
 ## Contents
 
 

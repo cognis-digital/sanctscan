@@ -1,0 +1,3 @@
+$ sanctscan-emit --version
+
+sanctscan 0.1.0

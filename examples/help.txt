@@ -1,0 +1,29 @@
+$ sanctscan-emit --help
+
+usage: sanctscan [-h] [--version] {screen} ...
+
+SANCTSCAN -- deterministic, auditable sanctions name-screening with explainable fuzzy matching.
+
+positional arguments:
+  {screen}
+    screen    Screen one or more names against a sanctions watchlist.
+
+options:
+  -h, --help  show this help message and exit
+  --version   show program's version number and exit
+
+Command-line interface for SANCTSCAN.
+
+Examples:
+
+  # Screen a single name against an OFAC-style CSV watchlist
+  python -m sanctscan screen --watchlist demos/01-basic/watchlist.csv \
+      --name "Vladmir Putin"
+
+  # Screen a column of names from a CSV, emit JSON for CI / piping
+  python -m sanctscan screen -w watchlist.csv --input customers.csv \
+      --column full_name --format json --threshold 0.85
+
+  # Exit code is non-zero when any hit at/above the threshold is found,
+  # so it can gate a pipeline:
+  python -m sanctscan screen -w wl.csv -n "Some Name" || echo "FLAGGED"
